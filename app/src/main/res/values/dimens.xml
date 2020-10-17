@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="none">0dp</dimen>
+
+    <dimen name="card_bottom">14dp</dimen>
+    <dimen name="card_text_margin">21dp</dimen>
+    <dimen name="card_text_padding">15dp</dimen>
+    <dimen name="card_title_text_size">20sp</dimen>
+    <dimen name="card_site_text_size">14sp</dimen>
+    <dimen name="card_img_size">100dp</dimen>
+    <dimen name="card_img_border">2dp</dimen>
+
+    <dimen name="card_no_item_radius">14dp</dimen>
+    <dimen name="card_no_item_padding">9dp</dimen>
+
+    <dimen name="detail_img_size">100dp</dimen>
+    <dimen name="detail_login_text_size">20sp</dimen>
+    <dimen name="detail_name_text_size">16sp</dimen>
+    <dimen name="detail_location_text_size">14sp</dimen>
+    <dimen name="detail_repo_text_size">14sp</dimen>
+    <dimen name="detail_company_text_size">14sp</dimen>
+    <dimen name="detail_blog_text_size">14sp</dimen>
+    <dimen name="detail_bio_text_size">14sp</dimen>
+    <dimen name="detail_twitter_text_size">14sp</dimen>
+    <dimen name="detail_followers_text_size">12sp</dimen>
+    <dimen name="detail_following_text_size">12sp</dimen>
+
+    <dimen name="detail_padding_text_size">5dp</dimen>
+
+</resources>

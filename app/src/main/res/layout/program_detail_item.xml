@@ -1,0 +1,165 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWrite"
+    android:paddingTop="@dimen/card_text_margin"
+    android:paddingBottom="@dimen/card_text_margin">
+
+    <ImageView
+        android:id="@+id/image"
+        style="@style/DetailImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/login"
+        style="@style/DetailText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/detail_login_text_size"
+        android:text="@string/loading"
+        app:layout_constraintBottom_toTopOf="@id/name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image"
+        app:layout_constraintTop_toTopOf="@id/image" />
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/DetailText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorLightBlack"
+        android:textSize="@dimen/detail_name_text_size"
+        android:text="@string/loading"
+        app:layout_constraintBottom_toBottomOf="@id/location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image"
+        app:layout_constraintTop_toBottomOf="@id/login" />
+
+    <TextView
+        android:id="@+id/location"
+        style="@style/DetailText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorLightBlack"
+        android:textSize="@dimen/detail_location_text_size"
+        android:text="@string/loading"
+        android:drawablePadding="@dimen/detail_padding_text_size"
+        app:layout_constraintBottom_toBottomOf="@id/image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image"
+        app:layout_constraintTop_toBottomOf="@id/name" />
+
+    <TextView
+        android:id="@+id/company"
+        style="@style/DetailText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorLightBlack"
+        android:textSize="@dimen/detail_company_text_size"
+        android:text="@string/loading"
+        android:drawablePadding="@dimen/detail_padding_text_size"
+        app:layout_constraintBottom_toTopOf="@id/company"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image" />
+
+    <TextView
+        android:id="@+id/repo"
+        style="@style/DetailText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorLightBlue"
+        android:textSize="@dimen/detail_repo_text_size"
+        android:text="@string/loading"
+        android:drawablePadding="@dimen/detail_padding_text_size"
+        app:layout_constraintBottom_toTopOf="@id/blog"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/company"  />
+
+    <TextView
+        android:id="@+id/blog"
+        style="@style/DetailText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorLightBlack"
+        android:textSize="@dimen/detail_blog_text_size"
+        android:text="@string/loading"
+        android:drawablePadding="@dimen/detail_padding_text_size"
+        app:layout_constraintBottom_toTopOf="@id/bio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/repo" />
+
+    <TextView
+        android:id="@+id/bio"
+        style="@style/DetailText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorLightBlack"
+        android:textSize="@dimen/detail_bio_text_size"
+        android:text="@string/loading"
+        android:drawablePadding="@dimen/detail_padding_text_size"
+        app:layout_constraintBottom_toTopOf="@id/twitter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/blog" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/twitter"
+        style="@style/DetailText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bio">
+
+        <TextView
+            android:id="@+id/twitter_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/loading"
+            android:textColor="@color/colorLightBlue"
+            android:textSize="@dimen/detail_twitter_text_size"
+            android:drawablePadding="@dimen/detail_padding_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/followers"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/followers"
+            style="@style/DetailTwitter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/none"
+            android:textColor="@color/colorLightBlack"
+            android:textSize="@dimen/detail_followers_text_size"
+            android:drawablePadding="@dimen/detail_padding_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/following"
+            app:layout_constraintStart_toEndOf="@id/twitter_username"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/following"
+            style="@style/DetailTwitter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorLightBlack"
+            android:text="@string/none"
+            android:textSize="@dimen/detail_following_text_size"
+            android:drawablePadding="@dimen/detail_padding_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/followers"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

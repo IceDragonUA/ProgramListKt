@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">OLL.TV DEMO</string>
+
+    <string name="programs">OLL.TV PROGRAMS</string>
+    <string name="result">No results</string>
+    <string name="loading">Loading...</string>
+    <string name="none">-</string>
+</resources>
