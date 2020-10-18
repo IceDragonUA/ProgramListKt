@@ -7,6 +7,4 @@ interface AppProgramsRestApiDao {
 
     fun programList(borderId: Int, direction: Int): Single<ProgramList>
 
-    fun serialNumber(): String
-
 }

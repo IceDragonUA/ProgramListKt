@@ -4,8 +4,10 @@ import com.evaluation.executor.TestExecutor
 import com.evaluation.network.RestApi
 import com.evaluation.programs.network.AppProgramsRestApiDao
 import com.evaluation.programs.network.AppProgramsRestApiDaoImpl
+import com.evaluation.serial.TestSerialProvider
 import com.evaluation.tests.dao.RetrofitMocks
 import com.evaluation.tests.test
+import com.evaluation.utils.SERIAL
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.schedulers.Schedulers
 import junit.framework.Assert.assertNotNull
@@ -28,22 +30,25 @@ class AppProgramsRestApiDaoTest {
     private var appRest: RestApi = RetrofitMocks.appRest
 
     @Mock
+    private lateinit var serialProvider: TestSerialProvider
+
+    @Mock
     private lateinit var executor: TestExecutor
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        appProgramsRestApiDao = AppProgramsRestApiDaoImpl(appRest, executor)
+        appProgramsRestApiDao = AppProgramsRestApiDaoImpl(appRest, serialProvider, executor)
         whenever(executor.mainExecutor).thenReturn(Schedulers.trampoline())
         whenever(executor.postExecutor).thenReturn(Schedulers.trampoline())
-        whenever(appProgramsRestApiDao.serialNumber()).thenReturn("RZ8N31R7ENY")
-
+        whenever(serialProvider.serial).thenReturn(SERIAL)
     }
 
     @Test
     fun `should do call`() {
         assertNotNull(appRest)
         assertNotNull(executor)
+        assertNotNull(serialProvider)
         assertNotNull(appProgramsRestApiDao)
 
         appProgramsRestApiDao.programList(0, 0).test {

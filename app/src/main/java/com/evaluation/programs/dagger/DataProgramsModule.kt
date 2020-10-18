@@ -14,6 +14,7 @@ import com.evaluation.programs.mapper.ProgramMapper
 import com.evaluation.programs.network.AppProgramsRestApiDao
 import com.evaluation.programs.network.AppProgramsRestApiDaoImpl
 import com.evaluation.programs.repository.AppProgramsRepository
+import com.evaluation.serial.BaseSerialProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,7 +28,7 @@ object DataProgramsModule {
 
     @Singleton
     @Provides
-    fun appRest(appRest: RestApi, executor: BaseExecutor): AppProgramsRestApiDao = AppProgramsRestApiDaoImpl(appRest, executor)
+    fun appRest(appRest: RestApi,  serialProvider: BaseSerialProvider, executor: BaseExecutor): AppProgramsRestApiDao = AppProgramsRestApiDaoImpl(appRest, serialProvider, executor)
 
     @Provides
     @Singleton

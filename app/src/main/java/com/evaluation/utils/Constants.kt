@@ -20,3 +20,5 @@ const val DIRECTION_DOWN = 1
 const val NO_ITEM = "NO_ITEM"
 
 const val THREADS = 5
+
+const val SERIAL = "RZ8N31R7ENY"
