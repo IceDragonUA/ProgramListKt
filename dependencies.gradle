@@ -46,6 +46,8 @@ ext {
             retrofitAdaptRx          : 'com.squareup.retrofit2:adapter-rxjava2:2.9.0',
             retrofitConvGson         : 'com.squareup.retrofit2:converter-gson:2.9.0',
 
+            reactiveNetwork          : 'com.github.pwittchen:reactivenetwork-rx2:3.0.8',
+
             rxJava                   : 'io.reactivex.rxjava2:rxjava:2.2.19',
             rxAndroid                : 'io.reactivex.rxjava2:rxandroid:2.1.1',
 

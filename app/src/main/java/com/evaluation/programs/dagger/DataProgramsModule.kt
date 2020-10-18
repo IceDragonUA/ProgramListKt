@@ -40,7 +40,7 @@ object DataProgramsModule {
 
     @Singleton
     @Provides
-    fun appDataSource(appRepository: AppProgramsRepository) = AppProgramDataSource(appRepository)
+    fun appDataSource(context: Context, appRepository: AppProgramsRepository) = AppProgramDataSource(context, appRepository)
 
     @Singleton
     @Provides

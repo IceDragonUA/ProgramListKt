@@ -98,6 +98,7 @@ dependencies {
     implementation dep.retrofit
     implementation dep.retrofitAdaptRx
     implementation dep.retrofitConvGson
+    implementation dep.reactiveNetwork
     implementation dep.okhttpLogging
 
     //Room

@@ -1,24 +1,39 @@
 package com.evaluation.programs.datasource
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.evaluation.adapter.viewholder.item.BaseItemView
 import com.evaluation.adapter.viewholder.item.NoItemView
 import com.evaluation.programs.repository.AppProgramsRepository
 import com.evaluation.utils.*
+import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import javax.inject.Inject
+
 
 /**
  * @author Vladyslav Havrylenko
  * @since 08.10.2020
  */
 class AppProgramDataSource @Inject constructor(
+    private val context: Context,
     private val repository: AppProgramsRepository
 ) : PageKeyedDataSource<Int, BaseItemView>() {
 
     val network = MutableLiveData<Boolean>()
 
-    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, BaseItemView>) {
+    private var disposable: Disposable? = null
+    private val compositeDisposable = CompositeDisposable()
+
+    override fun loadInitial(
+        params: LoadInitialParams<Int>,
+        callback: LoadInitialCallback<Int, BaseItemView>
+    ) {
         repository.programListInit(
             borderId = DEFAULT_BORDER_ID,
             direction = DEFAULT_DIRECTION,
@@ -28,11 +43,19 @@ class AppProgramDataSource @Inject constructor(
             onSuccess = { programList ->
                 val refresh = programList.firstOrNull() is NoItemView
                 postInitialState(refreshNetworkState(refresh))
-                callback.onResult(programList, programList.first().beforeId, programList.last().afterId)
+                callback.onResult(
+                    programList,
+                    programList.first().beforeId,
+                    programList.last().afterId
+                )
             },
             onError = { programList ->
                 postInitialState(NetworkState.LOADED)
-                callback.onResult(programList, null, null)
+                callback.onResult(
+                    programList,
+                    programList.first().beforeId,
+                    programList.last().afterId
+                )
             })
     }
 
@@ -49,7 +72,7 @@ class AppProgramDataSource @Inject constructor(
             },
             onError = {
                 postBeforeAfterState(NetworkState.LOADED)
-                callback.onResult(listOf(), null)
+                checkNetworkConnection(DIRECTION_UP, params, callback)
             })
     }
 
@@ -66,7 +89,7 @@ class AppProgramDataSource @Inject constructor(
             },
             onError = {
                 postBeforeAfterState(NetworkState.LOADED)
-                callback.onResult(listOf(), null)
+                checkNetworkConnection(DIRECTION_DOWN, params, callback)
             })
     }
 
@@ -80,5 +103,56 @@ class AppProgramDataSource @Inject constructor(
 
     private fun refreshNetworkState(refresh: Boolean) =
         if (refresh) NetworkState.LOADED else NetworkState.LOADING
+
+    private fun checkNetworkConnection(
+        direction: Int,
+        params: LoadParams<Int>,
+        callback: LoadCallback<Int, BaseItemView>
+    ) {
+        compositeDisposable.clear()
+        compositeDisposable.add(
+            ReactiveNetwork
+                .observeNetworkConnectivity(context)
+                .flatMapSingle { ReactiveNetwork.checkInternetConnectivity() }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        if (it) {
+                            repository.programListPaged(
+                                borderId = params.key,
+                                direction = direction,
+                                onPrepared = {
+                                    postBeforeAfterState(NetworkState.LOADING)
+                                },
+                                onSuccess = { programList ->
+                                    postBeforeAfterState(NetworkState.LOADED)
+                                    callback.onResult(
+                                        programList,
+                                        programBorderIdByDirection(direction, programList)
+                                    )
+                                    disposable?.dispose()
+                                },
+                                onError = {
+                                    postBeforeAfterState(NetworkState.LOADED)
+                                    callback.onResult(listOf(), null)
+                                    disposable?.dispose()
+                                })
+                        }
+                    },
+                    { Timber.e(it.message, "Loading error") },
+                    { Timber.d("Loading completed") },
+                    { disposable = it }
+                ))
+    }
+
+    private fun programBorderIdByDirection(
+        direction: Int,
+        programList: MutableList<BaseItemView>
+    ): Int? =
+        when (direction) {
+            DIRECTION_DOWN -> programList.last().afterId
+            else -> programList.first().beforeId
+        }
 
 }

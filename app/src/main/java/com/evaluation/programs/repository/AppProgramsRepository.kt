@@ -72,11 +72,24 @@ class AppProgramsRepository @Inject constructor(
                     Timber.e(errorMessage, "Loading error")
 
                     val itemList: MutableList<BaseItemView> = mutableListOf()
-                    itemList.add(
-                        NoItemView(
-                            title = context.resources.getString(R.string.result).defIfNull()
+                    val databaseProgramList = appProgramsDatabaseDao.programList()
+                    databaseProgramList.forEach {
+                        itemList.add(
+                            CardItemView(
+                                index = it.id.defIfNull().toString(),
+                                beforeId = databaseProgramList.first().id,
+                                afterId = databaseProgramList.last().id,
+                                program = it
+                            )
                         )
-                    )
+                    }
+                    itemList.ifEmpty {
+                        itemList.add(
+                            NoItemView(
+                                title = context.resources.getString(R.string.result).defIfNull()
+                            )
+                        )
+                    }
 
                     onError(itemList)
                 }
