@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/card_bottom"
-    android:background="@color/colorWrite"
     android:theme="@style/Theme.MaterialComponents.Light"
-    app:cardCornerRadius="@dimen/none">
+    app:cardBackgroundColor="@color/colorLightBlack"
+    app:cardCornerRadius="@dimen/none"
+    app:rippleColor="@color/colorLightBlue">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -24,7 +24,6 @@
             tools:ignore="ContentDescription" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/twitter"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@id/image"
@@ -38,7 +37,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/loading"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWrite"
                 android:textSize="@dimen/card_title_text_size"
                 app:layout_constraintBottom_toTopOf="@id/time"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -51,15 +50,45 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/loading"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/card_title_text_size"
-                app:layout_constraintTop_toBottomOf="@id/title"
+                android:textColor="@color/colorLightBlue"
+                android:textSize="@dimen/card_time_text_size"
+                app:layout_constraintBottom_toTopOf="@id/channel"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/title" />
+
+            <TextView
+                android:id="@+id/channel"
+                style="@style/CardText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/loading"
+                android:textColor="@color/colorLighterGrey"
+                android:textSize="@dimen/card_time_text_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/time" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:background="@color/colorRed"
+        android:paddingStart="@dimen/card_now_padding"
+        android:paddingLeft="@dimen/card_now_padding"
+        android:paddingTop="@dimen/card_now_padding"
+        android:paddingEnd="@dimen/card_now_padding"
+        android:paddingRight="@dimen/card_now_padding"
+        android:paddingBottom="@dimen/card_now_padding"
+        android:text="@string/now"
+        android:textColor="@color/colorWrite"
+        android:textSize="@dimen/card_now_text_size"
+        android:visibility="gone" />
 
 </com.google.android.material.card.MaterialCardView>

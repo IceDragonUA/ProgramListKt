@@ -20,13 +20,25 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.evaluation.details.fragment.DetailFragment"
-        android:label="{channelName}" >
+        android:label="{name}" >
         <argument
-            android:name="programId"
+            android:name="name"
             app:argType="string" />
         <argument
-            android:name="channelName"
+            android:name="icon"
             app:argType="string" />
+        <argument
+            android:name="description"
+            app:argType="string" />
+        <argument
+            android:name="start"
+            app:argType="string" />
+        <argument
+            android:name="stop"
+            app:argType="string" />
+        <argument
+            android:name="now"
+            app:argType="integer" />
     </fragment>
 
 </navigation>

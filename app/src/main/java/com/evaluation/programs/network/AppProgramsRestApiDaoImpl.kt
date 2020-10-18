@@ -20,7 +20,7 @@ class AppProgramsRestApiDaoImpl @Inject constructor(
     }
 
     @SuppressLint("HardwareIds")
-    fun serialNumber(): String {
+    override fun serialNumber(): String {
         val deviceId =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 try {

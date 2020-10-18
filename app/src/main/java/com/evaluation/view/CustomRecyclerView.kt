@@ -2,11 +2,13 @@ package com.evaluation.view
 
 import android.content.Context
 import android.util.AttributeSet
-import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.evaluation.R
 import com.evaluation.adapter.AdapterItemClickListener
 import com.evaluation.adapter.CustomListAdapter
+import com.evaluation.adapter.decorator.DividerItemDecorator
 import com.evaluation.adapter.factory.TypesFactoryImpl
 import com.evaluation.adapter.viewholder.item.BaseItemView
 
@@ -26,6 +28,7 @@ class CustomRecyclerView : RecyclerView, AdapterItemClickListener<BaseItemView> 
         layoutManager = LinearLayoutManager(context)
         adapter = CustomListAdapter(TypesFactoryImpl(), this)
         itemAnimator = null
+        addItemDecoration(DividerItemDecorator(ContextCompat.getDrawable(context, R.drawable.ic_divider)))
     }
 
     override fun getAdapter(): CustomListAdapter =

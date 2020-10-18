@@ -36,6 +36,8 @@ class AppProgramsRestApiDaoTest {
         appProgramsRestApiDao = AppProgramsRestApiDaoImpl(appRest, executor)
         whenever(executor.mainExecutor).thenReturn(Schedulers.trampoline())
         whenever(executor.postExecutor).thenReturn(Schedulers.trampoline())
+        whenever(appProgramsRestApiDao.serialNumber()).thenReturn("RZ8N31R7ENY")
+
     }
 
     @Test

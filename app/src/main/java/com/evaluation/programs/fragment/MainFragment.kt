@@ -54,8 +54,12 @@ class MainFragment : Fragment(), AdapterItemClickListener<BaseItemView> {
         when (item) {
             is CardItemView -> findNavController().navigate(
                 MainFragmentDirections.actionMainFragmentToDetailFragment(
-                    item.index,
-                    item.program.name
+                    item.program.name,
+                    item.program.icon,
+                    item.program.description,
+                    item.program.start,
+                    item.program.stop,
+                    item.program.now,
                 )
             )
         }

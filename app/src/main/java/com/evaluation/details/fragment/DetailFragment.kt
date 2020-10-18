@@ -6,7 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.evaluation.R
+import com.evaluation.utils.defIfNull
+import com.evaluation.utils.initText
+import com.evaluation.utils.loadFromUrl
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.detail_layout.*
+import kotlinx.android.synthetic.main.program_card_item.view.*
 
 /**
  * @author Vladyslav Havrylenko
@@ -25,7 +30,10 @@ class DetailFragment : Fragment() {
     }
 
     private fun initRootView(fromBundle: DetailFragmentArgs) {
-
+        image.loadFromUrl(fromBundle.icon)
+        time.initText(fromBundle.start + context?.resources?.getString(R.string.none).defIfNull() + fromBundle.stop)
+        description.initText(fromBundle.description)
+        now.visibility = if (fromBundle.now > 0) View.VISIBLE else View.GONE
     }
 
 }
