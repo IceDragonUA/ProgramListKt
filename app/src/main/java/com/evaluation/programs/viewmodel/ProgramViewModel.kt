@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.ViewModel
+import com.evaluation.adapter.viewholder.item.BaseItemView
 import com.evaluation.programs.interaction.AppProgramsInteraction
+import com.evaluation.utils.Listing
 import com.evaluation.utils.empty
 
 /**
@@ -13,17 +15,11 @@ import com.evaluation.utils.empty
  * @since 07.10.2020
  */
 class ProgramViewModel @ViewModelInject constructor(
-    private val interaction: AppProgramsInteraction
+    interaction: AppProgramsInteraction
 ) : ViewModel() {
 
-    private val query = MutableLiveData<String>()
-    private val itemResult = map(query) {
-        interaction.programList()
-    }
+    private val itemResult = MutableLiveData(interaction.programList())
     val items = switchMap(itemResult) { it.pagedList }
     val networkState = switchMap(itemResult) { it.networkState }
 
-    init {
-        this.query.value = empty()
-    }
 }

@@ -49,13 +49,8 @@ class AppProgramDataSource @Inject constructor(
                     programList.last().afterId
                 )
             },
-            onError = { programList ->
-                postInitialState(NetworkState.LOADED)
-                callback.onResult(
-                    programList,
-                    programList.first().beforeId,
-                    programList.last().afterId
-                )
+            onError = {
+                checkNetworkConnectionForInit(DEFAULT_BORDER_ID, DEFAULT_DIRECTION, callback)
             })
     }
 
@@ -72,7 +67,7 @@ class AppProgramDataSource @Inject constructor(
             },
             onError = {
                 postBeforeAfterState(NetworkState.LOADED)
-                checkNetworkConnection(DIRECTION_UP, params, callback)
+                checkNetworkConnectionForPage(DIRECTION_UP, params, callback)
             })
     }
 
@@ -89,7 +84,7 @@ class AppProgramDataSource @Inject constructor(
             },
             onError = {
                 postBeforeAfterState(NetworkState.LOADED)
-                checkNetworkConnection(DIRECTION_DOWN, params, callback)
+                checkNetworkConnectionForPage(DIRECTION_DOWN, params, callback)
             })
     }
 
@@ -104,12 +99,58 @@ class AppProgramDataSource @Inject constructor(
     private fun refreshNetworkState(refresh: Boolean) =
         if (refresh) NetworkState.LOADED else NetworkState.LOADING
 
-    private fun checkNetworkConnection(
+    private fun checkNetworkConnectionForInit(
+        id: Int,
+        direction: Int,
+        callback: LoadInitialCallback<Int, BaseItemView>
+    ) {
+        compositeDisposable.add(
+            ReactiveNetwork
+                .observeNetworkConnectivity(context)
+                .flatMapSingle { ReactiveNetwork.checkInternetConnectivity() }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        if (it) {
+                            repository.programListInit(
+                                borderId = id,
+                                direction = direction,
+                                onPrepared = {
+                                    postInitialState(NetworkState.LOADING)
+                                },
+                                onSuccess = { programList ->
+                                    val refresh = programList.firstOrNull() is NoItemView
+                                    postInitialState(refreshNetworkState(refresh))
+                                    callback.onResult(
+                                        programList,
+                                        programList.first().beforeId,
+                                        programList.last().afterId
+                                    )
+                                    disposable?.dispose()
+                                },
+                                onError = { programList ->
+                                    postInitialState(NetworkState.LOADED)
+                                    callback.onResult(
+                                        programList,
+                                        programList.first().beforeId,
+                                        programList.last().afterId
+                                    )
+                                    disposable?.dispose()
+                                })
+                        }
+                    },
+                    { Timber.e(it.message, "Loading error") },
+                    { Timber.d("Loading completed") },
+                    { disposable = it }
+                ))
+    }
+
+    private fun checkNetworkConnectionForPage(
         direction: Int,
         params: LoadParams<Int>,
         callback: LoadCallback<Int, BaseItemView>
     ) {
-        compositeDisposable.clear()
         compositeDisposable.add(
             ReactiveNetwork
                 .observeNetworkConnectivity(context)
